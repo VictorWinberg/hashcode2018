@@ -10,20 +10,9 @@ class Ride:
     self.start = s
     self.finish = f
 
-if __name__ == "__main__":
-  fname = 'inputs/a_example.in'
-
-  if len(argv) == 2:
-    fname = argv[1]
-
-  with open(fname) as f:
-    R, C, F, N, B, T = map(int, f.readline().split(' '))
-    content = f.readlines()
-    rides = [ Ride(i, *list(map(int, x.strip().split(' ')))) for i, x in enumerate(content)]
-    rides_clone = [ride for ride in rides]
-
+def highscore(rides_clone, F, B, T):
   scores = {}
-  count = 1000
+  count = 10
   
   for i in range(count):
     rides = [ride for ride in rides_clone]
@@ -32,7 +21,7 @@ if __name__ == "__main__":
     vehicle_index = 0
 
     while len(rides) > 0:
-      ride_index = randint(0, len(rides) // 2)
+      ride_index = 0 # randint(0, len(rides) - 1)
       ride = rides.pop(ride_index)
       vehicles[vehicle_index % F].append(ride.index)
       vehicle_index += 1
@@ -46,7 +35,21 @@ if __name__ == "__main__":
 
   m_score = max(scores, key=float)
   print(m_score)
-  m_vehicle_rides = scores[m_score]
+
+  return scores[m_score]
+
+if __name__ == "__main__":
+  fname = 'inputs/a_example.in'
+
+  if len(argv) == 2:
+    fname = argv[1]
+
+  with open(fname) as f:
+    R, C, F, N, B, T = map(int, f.readline().split(' '))
+    content = f.readlines()
+    rides = [ Ride(i, *list(map(int, x.strip().split(' ')))) for i, x in enumerate(content)]
+
+  m_vehicle_rides = highscore(rides, F, B, T)
 
   with open('outputs/' + fname.split('/')[1], 'w') as f:
     for vehicle in m_vehicle_rides:
