@@ -22,7 +22,6 @@ def validate(rides, vehicles_rides, B, T):
             if steps > rides[v].finish: continue
             score += ride_dist
 
-    print("SCORE: {}".format(score))
     return score
 
 class Ride:
