@@ -2,7 +2,18 @@ from sys import argv
 from math import floor, sqrt
 from random import randint
 
+def getClosestCar(start, end, cars):
+    distToStart = 0
+    carIndex = 0
+    for x in range(0, len(cars)):
+        distToCar = dist(start, cars[x])
+        if(distToStart > distToCar):
+            distToStart = distToCar
+            carIndex = x
+    return carIndex
 
+def AppendRideToCar(indexOnCar, cars, RideEnd):
+    cars[indexOnCar] = RideEnd
 
 def dist(start, end):
     return abs(start[0] - end[0] + start[1] - end[1])
@@ -19,7 +30,7 @@ if __name__ == "__main__":
     rides = [list(x.strip()) for x in content]
 
   rides = list(range(N))
-  vehicles = [[]] * F
+  vehicles = [[] for i in range(F)]
   vehicle_index = 0
 
   while len(rides) > 0:
