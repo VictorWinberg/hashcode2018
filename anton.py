@@ -23,6 +23,8 @@ def validate(rides, vehicles_rides, B, T):
             score += ride_dist
 
     print("SCORE: {}".format(score))
+    return score
+
 class Ride:
   def __init__(self, index, a, b, x, y, s, f):
     self.index = index
@@ -40,10 +42,10 @@ if __name__ == "__main__":
   with open(fname) as f:
     R, C, F, N, B, T = map(int, f.readline().split(' '))
     content = f.readlines()
-    # rides1 = [list(map(int, x.strip().replace(" ", ""))) for x in content]
     rides = [ Ride(i, *list(map(int, x.strip().split(' ')))) for i, x in enumerate(content)]
     val_rides = [r for r in rides]
   vehicles = [[] for i in range(F)]
+
   rides.sort(key=lambda x: x.start, reverse=False)
   vehicle_index = 0
 
