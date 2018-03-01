@@ -28,7 +28,7 @@ def getBestCar(start, end, cars, T):
         distToCar = dist(start, cars[x].pos)
         if(distToStart > distToCar):
             stepsToTake = distToCar + dist(start, end)
-            if((stepsToTake + cars[x].steps) < T):
+            if((stepsToTake + cars[x].steps) <= T):
                 distToStart = distToCar
                 carIndex = x
     return carIndex
