@@ -33,7 +33,7 @@ def getBestCar(start, end, cars, T):
                 carIndex = x
     return carIndex
 
-def AppendRideToCar(indexOnCar, cars, end, steps):
+def moveCar(indexOnCar, cars, end, steps):
     cars[indexOnCar].pos = end
     cars[indexOnCar].steps = steps
 
@@ -81,10 +81,10 @@ if __name__ == "__main__":
         ride = rides.pop(ride_index)
         closestCar = getBestCar(getStart(start, ride_index), end[ride_index], cars, T)
         stepsToTake = dist(getStart(start, ride_index), cars[closestCar].pos) + dist(start[ride_index], end[ride_index])
-        AppendRideToCar(closestCar, cars, end[ride_index], stepsToTake)
+        moveCar(closestCar, cars, end[ride_index], stepsToTake)
+        print(cars)
         vehicles[closestCar].append(ride)
         vehicle_index += 1
-    print(cars)
 
     vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
 
