@@ -9,10 +9,7 @@ def getEnd(end,rideNbr):
     return end(rideNbr)
 
 def fillVectors(rides, N):
-  start = [range(N)]
-  end = [range(N)]
-  e_start = [range(N)]
-  l_finish = [range(N)]
+  start, end, e_start, l_finish = [], [], [], []
   for ride in range(N):
     digits = [int(s) for s in rides[ride].split() if s.isdigit()]
     start.append((digits[0], digits[1]))
@@ -20,6 +17,9 @@ def fillVectors(rides, N):
     e_start.append(digits[4])
     l_finish.append(digits[5])
   return start, end, e_start, l_finish
+
+def dist(start, end):
+  return abs(start[0] - end[0] + start[1] - end[1])
 
 
 if __name__ == "__main__":
@@ -34,6 +34,7 @@ if __name__ == "__main__":
     rides = [list(x.strip()) for x in content]
 
   start, end, e_start, l_finish = fillVectors(content, N)
+  print(start)
   rides = list(range(N))
   vehicles = [[]] * F
   vehicle_index = 0
