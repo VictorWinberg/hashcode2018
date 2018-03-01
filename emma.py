@@ -2,7 +2,7 @@ from sys import argv
 from math import floor, sqrt
 from random import randint
 
-def getClosestCar(start, end, cars):
+def getClosestCar(start, cars):
     distToStart = 0
     carIndex = 0
     for x in range(0, len(cars)):
@@ -14,6 +14,9 @@ def getClosestCar(start, end, cars):
 
 def AppendRideToCar(indexOnCar, cars, RideEnd):
     cars[indexOnCar] = RideEnd
+
+def sortAfterEarliestTime(rides):
+    return rides
 
 def dist(start, end):
     return abs(start[0] - end[0] + start[1] - end[1])
@@ -39,4 +42,8 @@ if __name__ == "__main__":
     vehicles[vehicle_index % F].append(ride)
     vehicle_index += 1
 
-  print(vehicles)
+  vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
+
+  with open('outputs/solution.txt', 'w') as f:
+    for vehicle in vehicles_rides:
+      f.write(' '.join([str(ride) for ride in vehicle]) + '\n')
