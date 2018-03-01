@@ -12,7 +12,6 @@ class Car:
         return str(self.pos)
 
 def getClosestCar(start, cars):
-    print(cars)
     distToStart = dist(start, cars[0].pos)
     carIndex = 0
     for x in range(1, len(cars)):
@@ -22,26 +21,24 @@ def getClosestCar(start, cars):
             carIndex = x
     return carIndex
 
-def getBestCar(start, cars):
-    print(cars)
+def getBestCar(start, end, cars, T):
     distToStart = dist(start, cars[0].pos)
     carIndex = 0
     for x in range(1, len(cars)):
         distToCar = dist(start, cars[x].pos)
         if(distToStart > distToCar):
-            distToStart = distToCar
-            carIndex = x
+            stepsToTake = distToCar + dist(start, end)
+            if((stepsToTake + cars[x].steps) <= T):
+                distToStart = distToCar
+                carIndex = x
     return carIndex
 
 def AppendRideToCar(indexOnCar, cars, end, steps):
     cars[indexOnCar].pos = end
     cars[indexOnCar].steps = steps
 
-def sortAfterEarliestTime(rides):
-    return rides
-
 def dist(start, end):
-    return abs(start[0] - end[0] + start[1] - end[1])
+    return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
 def getStart(start, rideNbr):
     return start[rideNbr]
@@ -76,17 +73,18 @@ if __name__ == "__main__":
     rides = list(range(N))
     vehicles = [[] for i in range(F)]
     cars = [ Car(0, 0, 0) for i in range(F)]
-    print(cars)
 
     vehicle_index = 0
 
     while len(rides) > 0:
         ride_index = randint(0, len(rides) - 1)
         ride = rides.pop(ride_index)
-        closestCar = getClosestCar(getStart(start, ride_index), cars)
-        AppendRideToCar(closestCar, cars, end[ride_index], dist(start[ride_index], end[ride_index]))
+        closestCar = getBestCar(getStart(start, ride_index), end[ride_index], cars, T)
+        stepsToTake = dist(getStart(start, ride_index), cars[closestCar].pos) + dist(start[ride_index], end[ride_index])
+        AppendRideToCar(closestCar, cars, end[ride_index], stepsToTake)
         vehicles[closestCar].append(ride)
         vehicle_index += 1
+    print(cars)
 
     vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
 
