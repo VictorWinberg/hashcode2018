@@ -33,18 +33,6 @@ def getBestCar(start, end, cars, T):
                 carIndex = x
     return carIndex
 
-def getTheCar(start, end, cars, T):
-    distToStart = dist(start, cars[0].pos)
-    carIndex = 0
-    for x in range(1, len(cars)):
-        distToCar = dist(start, cars[x].pos)
-        if(distToStart > distToCar):
-            stepsToTake = distToCar + dist(start, end)
-            if((stepsToTake + cars[x].steps) <= T):
-                distToStart = distToCar
-                carIndex = x
-    return carIndex
-
 def moveCar(indexOnCar, cars, end, steps):
     cars[indexOnCar].pos = end
     cars[indexOnCar].steps = steps
