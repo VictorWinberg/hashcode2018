@@ -14,7 +14,7 @@ if __name__ == "__main__":
     rides = [list(x.strip()) for x in content]
 
   rides = list(range(N))
-  vehicles = [[]] * F
+  vehicles = [[] for i in range(F)]
   vehicle_index = 0
 
   while len(rides) > 0:
