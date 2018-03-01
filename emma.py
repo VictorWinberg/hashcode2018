@@ -2,28 +2,40 @@ from sys import argv
 from math import floor, sqrt
 from random import randint
 
+class Car:
+    def __init__(self, a, b, steps):
+        self.pos = a, b
+        self.steps = steps
+    def __str__(self):
+        return self.pos
+    def __repr__(self):
+        return str(self.pos)
+
 def getClosestCar(start, cars):
-    distToStart = dist(start, cars[0])
+    print(cars)
+    distToStart = dist(start, cars[0].pos)
     carIndex = 0
     for x in range(1, len(cars)):
-        distToCar = dist(start, cars[x])
+        distToCar = dist(start, cars[x].pos)
         if(distToStart > distToCar):
             distToStart = distToCar
             carIndex = x
     return carIndex
 
 def getBestCar(start, cars):
-    distToStart = dist(start, cars[0])
+    print(cars)
+    distToStart = dist(start, cars[0].pos)
     carIndex = 0
     for x in range(1, len(cars)):
-        distToCar = dist(start, cars[x])
+        distToCar = dist(start, cars[x].pos)
         if(distToStart > distToCar):
             distToStart = distToCar
             carIndex = x
     return carIndex
 
-def AppendRideToCar(indexOnCar, cars, end):
-    cars[indexOnCar] = end
+def AppendRideToCar(indexOnCar, cars, end, steps):
+    cars[indexOnCar].pos = end
+    cars[indexOnCar].steps = steps
 
 def sortAfterEarliestTime(rides):
     return rides
@@ -63,15 +75,16 @@ if __name__ == "__main__":
 
     rides = list(range(N))
     vehicles = [[] for i in range(F)]
-    cars = [[0,0] for i in range(F)]
+    cars = [ Car(0, 0, 0) for i in range(F)]
+    print(cars)
+
     vehicle_index = 0
 
     while len(rides) > 0:
-        print(cars)
         ride_index = randint(0, len(rides) - 1)
         ride = rides.pop(ride_index)
         closestCar = getClosestCar(getStart(start, ride_index), cars)
-        AppendRideToCar(closestCar, cars, end[ride_index])
+        AppendRideToCar(closestCar, cars, end[ride_index], dist(start[ride_index], end[ride_index]))
         vehicles[closestCar].append(ride)
         vehicle_index += 1
 
