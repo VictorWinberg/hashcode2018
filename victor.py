@@ -23,4 +23,8 @@ if __name__ == "__main__":
     vehicles[vehicle_index % F].append(ride)
     vehicle_index += 1
 
-  print(vehicles)
+  vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
+
+  with open('outputs/solution.txt', 'w') as f:
+    for vehicle in vehicles_rides:
+      f.write(' '.join([str(ride) for ride in vehicle]) + '\n')
