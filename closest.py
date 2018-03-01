@@ -22,7 +22,7 @@ def highscore(rides_clone, F, B, T):
     score = validate(rides_clone, vehicles_rides, B, T)
     scores[score] = vehicles_rides
 
-    if i % (count // 10) == 0: # Just to see progress for big/medium
+    if i % (count // 10) == 0:
       print("Progress {}/{}".format(i, count))
 
   m_score = max(scores, key=float)
