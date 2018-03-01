@@ -4,16 +4,16 @@ from util import Ride, validate
 
 def highscore(rides_clone, F, B, T):
   scores = {}
-  count = 10
+  count = 1
   
   for i in range(count):
     rides = [ride for ride in rides_clone]
-    # rides.sort(key=lambda x: x.start)
+    rides.sort(key=lambda x: x.start)
     vehicles = [[] for i in range(F)]
     vehicle_index = 0
 
     while len(rides) > 0:
-      ride_index = randint(0, len(rides) - 1) # 0
+      ride_index = 0 # randint(0, len(rides) - 1)
       ride = rides.pop(ride_index)
       vehicles[vehicle_index % F].append(ride.index)
       vehicle_index += 1
@@ -22,8 +22,8 @@ def highscore(rides_clone, F, B, T):
     score = validate(rides_clone, vehicles_rides, B, T)
     scores[score] = vehicles_rides
 
-    if i % (count // 10) == 0:
-      print("Progress {}/{}".format(i, count))
+    # if i % (count // 10) == 0:
+    #   print("Progress {}/{}".format(i, count))
 
   m_score = max(scores, key=float)
   print(m_score)
