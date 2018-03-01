@@ -1,3 +1,7 @@
+# Ignore .in and .zip files
+*.in
+*.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
