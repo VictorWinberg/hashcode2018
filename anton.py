@@ -3,11 +3,10 @@ from math import floor, sqrt
 from random import randint
 
 def dist(start, end):
-    return abs(start[0] - end[0] + start[1] - end[1])
+    return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
 def validate(rides, vehicles_rides, B, T):
     score = 0
-    # vehicles_rides = [[1, 0],[2, 2, 1]]
     for vehicle in vehicles_rides:
         vehicle_start = (0, 0)
         steps = 0
@@ -23,7 +22,7 @@ def validate(rides, vehicles_rides, B, T):
             if steps > rides[v].finish: continue
             score += ride_dist
 
-    print(score)
+    print("SCORE: {}".format(score))
 class Ride:
   def __init__(self, index, a, b, x, y, s, f):
     self.index = index
