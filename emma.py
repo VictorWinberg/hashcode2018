@@ -5,7 +5,7 @@ from random import randint
 def getClosestCar(start, cars):
     distToStart = dist(start, cars[0])
     carIndex = 0
-    for x in range(0, len(cars)):
+    for x in range(1, len(cars)):
         distToCar = dist(start, cars[x])
         if(distToStart > distToCar):
             distToStart = distToCar
@@ -15,7 +15,7 @@ def getClosestCar(start, cars):
 def getBestCar(start, cars):
     distToStart = dist(start, cars[0])
     carIndex = 0
-    for x in range(0, len(cars)):
+    for x in range(1, len(cars)):
         distToCar = dist(start, cars[x])
         if(distToStart > distToCar):
             distToStart = distToCar
