@@ -1,3 +1,6 @@
+def dist(start, end):
+    return abs(start[0] - end[0]) + abs(start[1] - end[1])
+
 class Ride:
   def __init__(self, index, a, b, x, y, s, f):
     self.index = index
@@ -10,13 +13,21 @@ class Car:
     def __init__(self, a, b, steps):
         self.pos = a, b
         self.steps = steps
-    def __str__(self):
-        return self.pos
-    def __repr__(self):
-        return str(self.pos)
+        self.rides = []
 
-def dist(start, end):
-    return abs(start[0] - end[0]) + abs(start[1] - end[1])
+    def __str__(self):
+        return self.rides
+
+    def __repr__(self):
+        return str(self.rides)
+
+    def addRide(self, ride):
+        self.rides.append(ride.index)
+        self.steps += dist(self.pos, ride.from_pos)
+        if self.steps < ride.start:
+            self.steps = ride.start
+        self.steps += dist(ride.from_pos, ride.to_pos )
+        self.pos = ride.to_pos
 
 def validate(rides, vehicles_rides, B, T):
     score = 0
