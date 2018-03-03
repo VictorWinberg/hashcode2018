@@ -45,6 +45,6 @@ if __name__ == "__main__":
     vehicle_rides = bestCarSolve(rides, F, B, T)
     
     score = validate(rides, vehicle_rides, B, T)
-    print(score)
+    print("{:,}".format(score))
 
     write('outputs/' + fname.split('/')[1], vehicle_rides)

@@ -1,3 +1,5 @@
+import sys
+
 class Ride:
   def __init__(self, index, a, b, x, y, s, f):
     self.index = index
@@ -63,3 +65,13 @@ def write(fname, vehicle_rides):
 
 def dist(start, end):
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
+    
+def progressBar(value, endvalue, bar_length=20):
+    percent = float(value) / endvalue
+    arrow = '-' * int(round(percent * bar_length)-1) + '>'
+    spaces = ' ' * (bar_length - len(arrow))
+
+    sys.stdout.write("\rProgress: [{0}] {1}%".format(arrow + spaces, int(round(percent * 100))))
+    if value == endvalue:
+        sys.stdout.write("\n")
+    sys.stdout.flush()

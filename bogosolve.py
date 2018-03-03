@@ -1,6 +1,6 @@
 from sys import argv
 from random import randint
-from util import Ride, validate, read, write
+from util import Ride, validate, read, write, progressBar
 
 def randomSolve(rides_clone, F, B, T):
     scores = {}
@@ -20,11 +20,11 @@ def randomSolve(rides_clone, F, B, T):
         vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
         score = validate(rides_clone, vehicles_rides, B, T)
         scores[score] = vehicles_rides
+        
+        if i % (count // 10) == 0:
+            progressBar(i, count - count // 10)
     
     m_score = max(scores, key=float)
-
-    if i % (count // 10) == 0:
-        print("Progress {}/{}".format(i, count))
 
     return scores[m_score]
 
@@ -39,6 +39,6 @@ if __name__ == "__main__":
     vehicle_rides = randomSolve(rides, F, B, T)
 
     score = validate(rides, vehicle_rides, B, T)
-    print(score)
+    print("{:,}".format(score))
 
     write('outputs/' + fname.split('/')[1], vehicle_rides)
