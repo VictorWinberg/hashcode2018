@@ -1,48 +1,47 @@
 from sys import argv
 from random import randint
-from util import Ride, Car, validate, moveCar, getBestCar
+from util import Ride, Car, validate, dist, read, write
 
-def highscore(rides_clone, F, B, T):
-  scores = {}
-  count = 10
-  
-  for i in range(count):
+def getBestCar(ride, cars, T):
+    start, end = ride.from_pos, ride.to_pos
+    distToStart = dist(start, cars[0].pos)
+    carIndex = 0
+    for x in range(1, len(cars)):
+        distToCar = dist(start, cars[x].pos)
+        if(distToStart > distToCar):
+            stepsToTake = distToCar + dist(start, end)
+        if((stepsToTake + cars[x].steps) <= T):
+            distToStart = distToCar
+            carIndex = x
+    return carIndex
+
+def moveCar(carIndex, cars, ride):
+    steps = dist(ride.from_pos, cars[carIndex].pos) + dist(ride.from_pos, ride.to_pos)
+    cars[carIndex].pos = ride.to_pos
+    cars[carIndex].steps = steps
+
+def bestCarSolve(rides_clone, F, B, T):
     rides = [ride for ride in rides_clone]
     vehicles = [[] for i in range(F)]
     cars = [ Car(0, 0, 0) for i in range(F)]
 
     while len(rides) > 0:
-      ride_index = randint(0, len(rides) - 1)
-      ride = rides.pop(ride_index)
-      closestCar = getBestCar(ride, cars, T)
-      moveCar(closestCar, cars, ride)
-      vehicles[closestCar].append(ride.index)
+        ride_index = randint(0, len(rides) - 1)
+        ride = rides.pop(ride_index)
+        closestCar = getBestCar(ride, cars, T)
+        moveCar(closestCar, cars, ride)
+        vehicles[closestCar].append(ride.index)
 
-    vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
-    score = validate(rides_clone, vehicles_rides, B, T)
-    scores[score] = vehicles_rides
-
-    if i % (count // 10) == 0:
-      print("Progress {}/{}".format(i, count))
-
-  m_score = max(scores, key=float)
-  print(m_score)
-
-  return scores[m_score]
+    return [ [len(vehicle), *vehicle] for vehicle in vehicles]
 
 if __name__ == "__main__":
-  fname = 'inputs/a_example.in'
+    fname = 'inputs/a_example.in'
 
-  if len(argv) == 2:
-    fname = argv[1]
+    if len(argv) == 2:
+        fname = argv[1]
 
-  with open(fname) as f:
-    R, C, F, N, B, T = map(int, f.readline().split(' '))
-    content = f.readlines()
-    rides = [ Ride(i, *list(map(int, x.strip().split(' ')))) for i, x in enumerate(content)]
+    R, C, F, N, B, T, rides = read(fname)
 
-  vehicle_rides = highscore(rides, F, B, T)
+    vehicle_rides = bestCarSolve(rides, F, B, T)
 
-  with open('outputs/' + fname.split('/')[1], 'w') as f:
-    for vehicle in vehicle_rides:
-      f.write(' '.join([str(ride) for ride in vehicle]) + '\n')
+    write('outputs/' + fname.split('/')[1], vehicle_rides)
