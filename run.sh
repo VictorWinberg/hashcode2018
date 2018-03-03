@@ -1,3 +1,3 @@
 #!/bin/bash
-for i in inputs/*; do python3 solution.py $i; done
+for i in inputs/*; do python3 $1 $i; done
 zip -r *.py{.zip,}
