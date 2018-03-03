@@ -1,12 +1,12 @@
 import sys
 
 class Ride:
-  def __init__(self, index, a, b, x, y, s, f):
-    self.index = index
-    self.from_pos = (a, b)
-    self.to_pos = (x, y)
-    self.start = s
-    self.finish = f
+    def __init__(self, index, a, b, x, y, s, f):
+        self.index = index
+        self.from_pos = (a, b)
+        self.to_pos = (x, y)
+        self.start = s
+        self.finish = f
 
 class Car:
     def __init__(self, a, b, steps):
