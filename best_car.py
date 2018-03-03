@@ -1,5 +1,4 @@
 from sys import argv
-from random import randint
 from util import Ride, Car, validate, dist, read, write
 
 def getBestCar(ride, cars, T):
@@ -10,9 +9,9 @@ def getBestCar(ride, cars, T):
         distToCar = dist(start, cars[x].pos)
         if(distToStart > distToCar):
             stepsToTake = distToCar + dist(start, end)
-        if((stepsToTake + cars[x].steps) <= T):
-            distToStart = distToCar
-            carIndex = x
+            if((stepsToTake + cars[x].steps) <= T):
+                distToStart = distToCar
+                carIndex = x
     return carIndex
 
 def moveCar(carIndex, cars, ride):
@@ -22,11 +21,12 @@ def moveCar(carIndex, cars, ride):
 
 def bestCarSolve(rides_clone, F, B, T):
     rides = [ride for ride in rides_clone]
+    rides.sort(key=lambda x: x.start)
     vehicles = [[] for i in range(F)]
     cars = [ Car(0, 0, 0) for i in range(F)]
 
     while len(rides) > 0:
-        ride_index = randint(0, len(rides) - 1)
+        ride_index = 0
         ride = rides.pop(ride_index)
         closestCar = getBestCar(ride, cars, T)
         moveCar(closestCar, cars, ride)
@@ -43,5 +43,8 @@ if __name__ == "__main__":
     R, C, F, N, B, T, rides = read(fname)
 
     vehicle_rides = bestCarSolve(rides, F, B, T)
+    
+    score = validate(rides, vehicle_rides, B, T)
+    print(score)
 
     write('outputs/' + fname.split('/')[1], vehicle_rides)

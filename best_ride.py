@@ -1,7 +1,5 @@
 from sys import argv
-import sys
-from random import randint
-from util import Ride, validate, Car, dist, read, write
+from util import Ride, Car, validate, dist, read, write
 
 def getBestRide(c, rides, T, B):
     index = {}
@@ -47,7 +45,7 @@ if __name__ == "__main__":
 
     vehicle_rides = bestRideSolve(rides, F, B, T)
 
-    score = validate(rides_clone, vehicles_rides, B, T)
+    score = validate(rides, vehicle_rides, B, T)
     print(score)
 
     write('outputs/' + fname.split('/')[1], vehicle_rides)

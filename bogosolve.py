@@ -11,15 +11,17 @@ def randomSolve(rides_clone, F, B, T):
         vehicles = [[] for i in range(F)]
         vehicle_index = 0
 
-    while len(rides) > 0:
-        ride_index = randint(0, len(rides) - 1)
-        ride = rides.pop(ride_index)
-        vehicles[vehicle_index % F].append(ride.index)
-        vehicle_index += 1
+        while len(rides) > 0:
+            ride_index = randint(0, len(rides) - 1)
+            ride = rides.pop(ride_index)
+            vehicles[vehicle_index % F].append(ride.index)
+            vehicle_index += 1
 
-    vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
-    score = validate(rides_clone, vehicles_rides, B, T)
-    scores[score] = vehicles_rides
+        vehicles_rides = [ [len(vehicle), *vehicle] for vehicle in vehicles]
+        score = validate(rides_clone, vehicles_rides, B, T)
+        scores[score] = vehicles_rides
+    
+    m_score = max(scores, key=float)
 
     if i % (count // 10) == 0:
         print("Progress {}/{}".format(i, count))
@@ -36,7 +38,7 @@ if __name__ == "__main__":
 
     vehicle_rides = randomSolve(rides, F, B, T)
 
-    score = validate(rides, vehicles_rides, B, T)
+    score = validate(rides, vehicle_rides, B, T)
     print(score)
 
     write('outputs/' + fname.split('/')[1], vehicle_rides)
